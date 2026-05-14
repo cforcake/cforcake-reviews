@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>C for Cake — Share Your Experience</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FAF6F0;--cream2:#F3EBE0;--cream3:#EAE0D0;--parchment:#E2D5C0;
+  --ink:#1C1208;--ink2:#4A3520;--ink3:#8B6E50;--ink4:#BFA98A;
+  --spice:#C44B0A;--spice2:rgba(196,75,10,.14);--spice3:rgba(196,75,10,.07);
+  --gold:#B8860B;--gold2:rgba(212,175,55,.13);--gold3:rgba(212,175,55,.25);
+  --r:18px;--r2:12px;--shadow:0 2px 24px rgba(28,18,8,.10);
+}
+html{scroll-behavior:smooth;background:var(--cream)}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.5}
+.shell{max-width:440px;margin:0 auto;padding:0 18px 60px;position:relative;z-index:1}
+
+/* HEADER */
+.header{padding:26px 0 20px;border-bottom:1px solid var(--parchment);margin-bottom:26px;display:flex;align-items:flex-end;justify-content:space-between}
+.brand{font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:700;color:var(--ink);line-height:1}
+.brand span{color:var(--spice)}
+.brand-sub{font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ink4);margin-top:5px}
+.g-pill{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:99px;background:#fff;border:1px solid var(--parchment);box-shadow:var(--shadow);font-size:11px;font-weight:500;color:var(--ink2)}
+.g-pill svg{width:14px;height:14px}
+
+/* PROGRESS — 2 steps only */
+.prog-wrap{margin-bottom:26px}
+.prog-track{height:3px;background:var(--cream3);border-radius:99px;overflow:hidden}
+.prog-fill{height:100%;background:var(--spice);border-radius:99px;transition:width .4s cubic-bezier(.4,0,.2,1);width:0%}
+.prog-row{font-size:11px;color:var(--ink4);margin-top:7px;display:flex;justify-content:space-between}
+
+/* STEPS */
+.step{display:none}
+.step.active{display:block;animation:rise .35s cubic-bezier(.4,0,.2,1)}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.eyebrow{font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--spice);margin-bottom:10px}
+.h1{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:700;line-height:1.15;color:var(--ink);margin-bottom:8px}
+.h1 em{font-style:italic;color:var(--spice)}
+.body-text{font-size:14px;color:var(--ink3);line-height:1.65;margin-bottom:24px}
+
+/* CHIPS */
+.chip-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px}
+.chip{background:#fff;border:1.5px solid var(--cream3);border-radius:var(--r2);padding:14px 12px;cursor:pointer;transition:all .18s;position:relative;user-select:none;box-shadow:0 1px 4px rgba(28,18,8,.05)}
+.chip:hover{border-color:var(--parchment);box-shadow:0 2px 12px rgba(28,18,8,.08)}
+.chip.on{border-color:var(--spice);background:var(--spice3)}
+.chip-tick{position:absolute;top:9px;right:9px;width:16px;height:16px;border-radius:50%;border:1.5px solid var(--parchment);background:#fff;display:flex;align-items:center;justify-content:center;font-size:8px;color:transparent;transition:all .15s}
+.chip.on .chip-tick{background:var(--spice);border-color:var(--spice);color:#fff}
+.chip-icon{font-size:22px;margin-bottom:6px;display:block}
+.chip-name{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.chip-sub{font-size:10px;color:var(--ink3);line-height:1.4}
+
+/* REVIEW CARD */
+.review-card{background:#fff;border:1px solid var(--cream3);border-radius:var(--r);padding:22px 20px 18px;margin-bottom:16px;box-shadow:var(--shadow);position:relative}
+.review-card::before{content:'"';font-family:'Cormorant Garamond',serif;font-size:80px;color:var(--spice2);position:absolute;top:-10px;left:14px;line-height:1;pointer-events:none}
+.review-ta{width:100%;border:none;outline:none;resize:none;font-size:14px;line-height:1.8;color:var(--ink);font-family:'DM Sans',sans-serif;background:transparent;min-height:110px;padding-top:20px}
+.review-hint{font-size:11px;color:var(--ink4);border-top:1px solid var(--cream3);padding-top:10px;margin-top:6px;display:flex;align-items:center;justify-content:space-between}
+.regen-btn{font-size:11px;color:var(--spice);cursor:pointer;font-weight:600;background:none;border:none;font-family:'DM Sans',sans-serif;padding:0;transition:opacity .15s}
+.regen-btn:hover{opacity:.7}
+.regen-btn:disabled{opacity:.3;cursor:default}
+
+/* GOLDEN 5 STAR SECTION */
+.five-star-box{
+  background:linear-gradient(135deg,#fffbf0,#fff8e0);
+  border:1.5px solid rgba(212,175,55,.4);
+  border-radius:var(--r);padding:18px 20px;
+  margin-bottom:16px;
+  box-shadow:0 2px 20px rgba(184,134,11,.12);
+}
+.five-star-label{
+  font-size:10px;font-weight:600;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--gold);
+  margin-bottom:10px;
+}
+.five-stars-row{display:flex;gap:4px;margin-bottom:10px}
+.fstar{font-size:32px;color:#F5A623;line-height:1;animation:starPop .4s cubic-bezier(.175,.885,.32,1.275) both}
+.fstar:nth-child(1){animation-delay:.05s}
+.fstar:nth-child(2){animation-delay:.1s}
+.fstar:nth-child(3){animation-delay:.15s}
+.fstar:nth-child(4){animation-delay:.2s}
+.fstar:nth-child(5){animation-delay:.25s}
+@keyframes starPop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.five-star-note{font-size:12px;color:var(--ink3);line-height:1.55}
+.five-star-note strong{color:var(--ink2)}
+
+/* HOW TO */
+.how-to{background:var(--gold2);border:1px solid rgba(184,134,11,.2);border-radius:var(--r2);padding:15px 16px;margin-bottom:20px}
+.how-to-title{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.how-steps{list-style:none;display:flex;flex-direction:column;gap:7px}
+.how-steps li{font-size:12px;color:var(--ink2);line-height:1.5;display:flex;align-items:flex-start;gap:8px}
+.how-num{width:18px;height:18px;border-radius:50%;background:var(--gold);color:#fff;font-size:10px;font-weight:700;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px}
+
+/* ACTION ROW */
+.action-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.copy-btn{padding:14px;border-radius:var(--r2);border:1.5px solid var(--spice);background:var(--spice3);color:var(--spice);font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:6px}
+.copy-btn:hover{background:var(--spice2)}
+.copy-btn.copied{background:var(--spice);color:#fff}
+.google-btn{padding:14px;border-radius:var(--r2);border:none;background:var(--ink);color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:7px;text-decoration:none}
+.google-btn:hover{background:var(--ink2)}
+.google-btn svg{width:16px;height:16px;flex-shrink:0}
+
+/* BUTTONS */
+.btn{width:100%;padding:15px;border-radius:var(--r2);font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s;border:none}
+.btn-primary{background:var(--spice);color:#fff;box-shadow:0 4px 20px rgba(196,75,10,.22)}
+.btn-primary:hover{background:#B03D06}
+.btn-primary:active{transform:scale(.98)}
+.btn-primary:disabled{background:var(--parchment);color:var(--ink4);box-shadow:none;cursor:default}
+
+/* SUCCESS */
+.success{text-align:center;padding:36px 0 16px}
+.success-cake{font-size:72px;display:block;animation:pop .5s cubic-bezier(.175,.885,.32,1.275) both}
+@keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+.success-title{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:700;color:var(--ink);margin:16px 0 8px}
+.success-sub{font-size:14px;color:var(--ink3);line-height:1.7;margin-bottom:26px}
+.confetti{display:flex;justify-content:center;gap:12px;font-size:24px;margin-bottom:20px;animation:float 2s ease-in-out infinite alternate}
+@keyframes float{from{transform:translateY(0)}to{transform:translateY(-6px)}}
+.loyalty-card{text-align:left;background:var(--gold2);border:1px solid rgba(184,134,11,.2);border-radius:var(--r);padding:18px 20px}
+.loyalty-card-label{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.loyalty-card-text{font-size:13px;color:var(--ink2);line-height:1.65}
+.loyalty-link{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:var(--spice);text-decoration:none}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--ink);color:#fff;border-radius:99px;padding:11px 22px;font-size:13px;font-weight:500;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;z-index:999;box-shadow:0 8px 32px rgba(28,18,8,.25)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- HEADER -->
+<div class="header">
+  <div>
+    <div class="brand">C <span>for</span> Cake</div>
+    <div class="brand-sub">Share your experience</div>
+  </div>
+  <div class="g-pill">
+    <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+    Google Reviews
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="prog-wrap">
+  <div class="prog-track"><div class="prog-fill" id="prog"></div></div>
+  <div class="prog-row"><span id="prog-label">Step 1 of 2</span><span id="prog-pct">0%</span></div>
+</div>
+
+<!-- ═══ STEP 1: WHAT STOOD OUT ═══ -->
+<div class="step active" id="s1">
+  <div class="eyebrow">Quick Review</div>
+  <div class="h1"><em>What</em> stood<br>out for you?</div>
+  <div class="body-text">Pick everything that felt true to your visit — we'll do the rest!</div>
+  <div class="chip-grid" id="chip-grid"></div>
+  <button class="btn btn-primary" id="btn-s1" onclick="go(2)" disabled>See my review →</button>
+</div>
+
+<!-- ═══ STEP 2: READY TO POST ═══ -->
+<div class="step" id="s2">
+  <div class="eyebrow">Ready to Post</div>
+  <div class="h1">Your review<br><em>is ready!</em></div>
+  <div class="body-text">Edit it however you like — or just post it as is!</div>
+
+  <div class="review-card">
+    <textarea class="review-ta" id="review-ta" rows="5"></textarea>
+    <div class="review-hint">
+      <span>✏ tap to edit</span>
+      <button class="regen-btn" id="regen-btn" onclick="regenReview()">↻ try different version</button>
+    </div>
+  </div>
+
+  <!-- GOLDEN 5 STAR SECTION -->
+  <div class="five-star-box">
+    <div class="five-star-label">Select on Google Reviews</div>
+    <div class="five-stars-row">
+      <span class="fstar">★</span>
+      <span class="fstar">★</span>
+      <span class="fstar">★</span>
+      <span class="fstar">★</span>
+      <span class="fstar">★</span>
+    </div>
+    <div class="five-star-note">On the next page, make sure <strong>5 stars are selected</strong> before posting your review!</div>
+  </div>
+
+  <div class="how-to">
+    <div class="how-to-title">How to post — 3 quick steps</div>
+    <ul class="how-steps">
+      <li><div class="how-num">1</div>Tap <strong>"Copy Review"</strong> — your text is copied</li>
+      <li><div class="how-num">2</div>Tap <strong>"Open Google"</strong> — our reviews page opens</li>
+      <li><div class="how-num">3</div>Select <strong>5 stars</strong>, <strong>paste</strong> your review, tap Post!</li>
+    </ul>
+  </div>
+
+  <div class="action-row">
+    <button class="copy-btn" id="copy-btn" onclick="copyReview()">
+      <span id="copy-icon">📋</span><span id="copy-txt">Copy Review</span>
+    </button>
+    <a class="google-btn" href="https://search.google.com/local/writereview?placeid=ChIJI8C9zBPP5zsRnuvvBf_iFRE" target="_blank" onclick="onOpenGoogle()">
+      <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+      Open Google
+    </a>
+  </div>
+</div>
+
+<!-- ═══ STEP 3: THANK YOU ═══ -->
+<div class="step" id="s3">
+  <div class="success">
+    <span class="success-cake">🎂</span>
+    <div class="confetti">🎉 ✨ 🎊 ✨ 🎉</div>
+    <div class="success-title">Thank you<br>so much!</div>
+    <div class="success-sub">Your review means the world<br>to our small bakery.<br>See you again soon!</div>
+    <div class="loyalty-card">
+      <div class="loyalty-card-label">Did you know?</div>
+      <div class="loyalty-card-text">We have a <strong>loyalty rewards program</strong> — collect stamps on every purchase and earn a <strong>free cake!</strong></div>
+      <a class="loyalty-link" href="https://cforcake.github.io/cforcakerewards/">Track my rewards →</a>
+    </div>
+  </div>
+</div>
+
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ── SUPABASE CONFIG ───────────────────────────────────────────────────────
+const SB_URL  = 'https://hjnhxpnppinrkembxyvj.supabase.co';
+const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhqbmh4cG5wcGlucmtlbWJ4eXZqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NjgwNjMsImV4cCI6MjA5NDI0NDA2M30.zcK4XXzVX6c0FtBWxpKHTRzUSIgvivEFTtW1CPmyAa8';
+const SB_REST = SB_URL + '/rest/v1/posted_reviews';
+const SB_HDR  = { 'Content-Type':'application/json','apikey':SB_ANON,'Authorization':'Bearer '+SB_ANON };
+
+async function sbLoadRetired() {
+  try {
+    const r = await fetch(SB_REST + '?select=fingerprint,use_count,retired', { headers:SB_HDR });
+    if (!r.ok) return;
+    const rows = await r.json();
+    rows.forEach(row => { if (row.use_count >= 3 || row.retired) retiredGlobal.add(row.fingerprint); });
+  } catch(e) {}
+}
+
+async function sbMarkPosted(fp) {
+  try {
+    // Try insert first
+    await fetch(SB_REST, {
+      method:'POST',
+      headers:{ ...SB_HDR, 'Prefer':'resolution=merge-duplicates,return=minimal' },
+      body: JSON.stringify({ fingerprint:fp, use_count:1, retired:false })
+    });
+    // Then increment use_count with a patch
+    await fetch(SB_REST + '?fingerprint=eq.' + encodeURIComponent(fp), {
+      method:'PATCH',
+      headers:{ ...SB_HDR, 'Prefer':'return=minimal' },
+      body: JSON.stringify({ use_count:3 }) // set to 3 = retired threshold
+    });
+  } catch(e) {}
+}
+
+// ── STATE ─────────────────────────────────────────────────────────────────
+let currentStep = 1;
+let picks = new Set();
+let usedThisSession = new Set();
+let retiredGlobal   = new Set();
+let regenCount = 0;
+let copied = false;
+
+// Load retired reviews immediately
+sbLoadRetired();
+
+// ── CHIPS ─────────────────────────────────────────────────────────────────
+const ALL_CHIPS = [
+  { icon:'🎂', name:'the cakes',        sub:'Taste and texture were on point'    },
+  { icon:'✨', name:'the freshness',     sub:'You could tell — real quality'      },
+  { icon:'😊', name:'the staff',         sub:'Warm, helpful, made me feel welcome'},
+  { icon:'🎁', name:'gifting it',        sub:'Perfect for special occasions'      },
+  { icon:'☕', name:'the vibe',          sub:'Great atmosphere, loved sitting in' },
+  { icon:'💰', name:'the value',         sub:'Good pricing, no regrets'           },
+  { icon:'🍫', name:'the flavours',      sub:'Things I had never tried before'    },
+  { icon:'📦', name:'the packaging',     sub:'Box was stunning, almost too nice'  },
+  { icon:'🔁', name:'the consistency',  sub:'Always great, every single visit'   },
+  { icon:'🥂', name:'the occasion',      sub:'Made the celebration extra special' },
+  { icon:'👨‍👩‍👧',name:'family approved', sub:'Everyone loved it, kids included'   },
+  { icon:'📍', name:'the location',      sub:'Great spot, easy to find'           },
+];
+
+// Build chips on load — random order each visit
+function buildChips() {
+  const pool = [...ALL_CHIPS].sort(() => Math.random() - 0.5);
+  window._chips = pool.slice(0, 8); // show 8 chips (4x2 grid)
+  picks = new Set();
+  const grid = document.getElementById('chip-grid');
+  grid.innerHTML = '';
+  window._chips.forEach((c, i) => {
+    const el = document.createElement('div');
+    el.className = 'chip';
+    el.innerHTML = `<div class="chip-tick">✓</div><span class="chip-icon">${c.icon}</span><div class="chip-name">${c.name}</div><div class="chip-sub">${c.sub}</div>`;
+    el.onclick = () => {
+      if (picks.has(i)) { picks.delete(i); el.classList.remove('on'); }
+      else { picks.add(i); el.classList.add('on'); }
+      document.getElementById('btn-s1').disabled = picks.size === 0;
+    };
+    grid.appendChild(el);
+  });
+}
+buildChips();
+
+// ── FRAGMENT POOL — only 5 star, Gen Z + millennial mix ──────────────────
+const F = {
+
+  // SHORT PUNCHY — Gen Z style (45% of reviews)
+  short: [
+    `C for Cake is actually so good i can't`,
+    `not me coming back here every week 😭`,
+    `told everyone i know about this place`,
+    `C for Cake understood the assignment`,
+    `no notes. genuinely perfect.`,
+    `came once. it's a problem now.`,
+    `the cake was sending me 🤌`,
+    `this place lives in my head rent free`,
+    `C for Cake >>> everything else nearby`,
+    `whoever bakes here deserves a raise`,
+    `my situationship with C for Cake is very serious`,
+    `went for one cake, left with four. no regrets.`,
+    `it's giving everything it's supposed to give`,
+    `the cakes here are criminally good`,
+    `C for Cake said 'here's a main character moment' and delivered`,
+    `if you know, you know. if you don't — go find out`,
+    `came for the cake, stayed for the whole experience`,
+    `just go. trust.`,
+    `best decision i've made this month honestly`,
+    `5 stars doesn't feel like enough`,
+    // Millennial style short
+    `one of the best bakeries i've ever been to, hands down`,
+    `genuinely one of my favourite spots in the city now`,
+    `C for Cake never disappoints — been coming for months`,
+    `this is my go-to bakery recommendation, always`,
+    `quality like this is rare — really impressed`,
+  ],
+
+  // OPENERS for medium reviews
+  open: [
+    `okay so i don't usually write reviews but C for Cake genuinely deserves one`,
+    `right so this place is something else entirely`,
+    `i was today years old when i found C for Cake and my life is different now`,
+    `my friend recommended this and i owe them everything`,
+    `ngl i was not expecting it to be this good`,
+    `been here a few times now and it keeps getting better`,
+    `genuinely one of those places you're glad you stumbled across`,
+    `C for Cake has entered my top bakeries of all time list`,
+    `i came in skeptical and left completely converted`,
+    // Millennial openers
+    `honestly one of the best bakery experiences i've had in this city`,
+    `i've tried a lot of bakeries and C for Cake genuinely stands out`,
+    `really impressed with everything here — exceeded expectations`,
+    `a friend recommended C for Cake and i completely understand why`,
+  ],
+
+  // CHIP REACTIONS — casual, specific, no formal sentences
+  chip: {
+    'the cakes': [
+      `the cake was insane 🤌`,
+      `that cake hit differently fr`,
+      `whoever made the cake — icon`,
+      `the baking here is next level seriously`,
+      `fluffy, moist, perfect — no notes`,
+      `i thought about that cake for days after`,
+      `the cake alone makes the trip worth it`,
+      `okay the cake was unreal`,
+    ],
+    'the freshness': [
+      `everything tasted so fresh it was unreal`,
+      `you could tell straight away — real quality ingredients`,
+      `nothing tasted pre-made or sitting around`,
+      `freshness was obvious from the first bite`,
+      `clearly made with actual care`,
+    ],
+    'the staff': [
+      `the team there is genuinely so warm`,
+      `staff were lovely, made the whole experience`,
+      `felt like a regular even on my first visit`,
+      `everyone was so helpful and nice`,
+      `the vibe from the staff makes such a difference`,
+    ],
+    'gifting it': [
+      `bought it as a gift and it was a massive hit`,
+      `got it for a birthday — people kept asking where it's from`,
+      `the presentation makes it perfect for gifting`,
+      `gifted this and got so many compliments, not even for me 😭`,
+      `the person i gave it to was genuinely so happy`,
+    ],
+    'the vibe': [
+      `the vibe there is immaculate`,
+      `love the atmosphere — so easy to just sit and enjoy`,
+      `it's such a nice space honestly`,
+      `great place to slow down for a bit`,
+      `the ambience alone makes it worth visiting`,
+    ],
+    'the value': [
+      `honestly great value for what you get`,
+      `fair prices, no complaints`,
+      `felt like i got more than what i paid for`,
+      `not the cheapest but absolutely worth every rupee`,
+    ],
+    'the flavours': [
+      `the flavour options are unlike anything nearby`,
+      `tried something new and it genuinely blew me away`,
+      `combinations you won't find at a regular bakery`,
+      `so many interesting options — hard to choose`,
+      `they have things i've never seen anywhere else`,
+    ],
+    'the packaging': [
+      `the packaging is SO pretty oh my god`,
+      `the box alone was too nice to open 😭`,
+      `presentation was 10/10 no notes`,
+      `literally couldn't stop taking photos of the box`,
+      `feels premium before you even open it`,
+    ],
+    'the consistency': [
+      `been coming for months — always on point`,
+      `never had a bad experience here, not once`,
+      `same quality every single time — that's actually rare`,
+      `consistency is underrated and they absolutely have it`,
+    ],
+    'the occasion': [
+      `made the whole celebration so much better`,
+      `the cake was literally the highlight of the party`,
+      `everyone at the event kept asking about it`,
+      `exactly what we needed for the occasion`,
+    ],
+    'family approved': [
+      `my kids absolutely demolished it and asked when we're going back`,
+      `whole family approved — high bar to clear`,
+      `became a family favourite immediately`,
+      `kids asked to go back before we even got home 😭`,
+    ],
+    'the location': [
+      `great spot, easy to find`,
+      `location is super convenient`,
+      `easy to get to and worth the trip either way`,
+    ],
+  },
+
+  // CLOSERS — punchy endings
+  close: [
+    `just go`,
+    `seriously just go`,
+    `cannot recommend enough`,
+    `10/10 no notes`,
+    `can't wait to go back`,
+    `will 100% return`,
+    `must visit`,
+    `best decision i made this week`,
+    `go if you haven't — you'll thank yourself`,
+    `highly recommend, no hesitation`,
+    `one of my favourite spots now`,
+    `already planning my next visit`,
+    `became a regular after the first bite`,
+    `you won't regret it`,
+    `do yourself a favour and go`,
+    // Millennial closers
+    `highly recommend to anyone looking for a great bakery`,
+    `will definitely be coming back`,
+    `a genuinely great spot — worth every visit`,
+  ],
+};
+
+// ── REVIEW GENERATOR ──────────────────────────────────────────────────────
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function fingerprint(text) {
+  let h = 0;
+  for (let i = 0; i < text.length; i++) h = Math.imul(31, h) + text.charCodeAt(i) | 0;
+  return Math.abs(h).toString(36);
+}
+
+function generateCandidate() {
+  const selectedChips = [...picks].map(i => window._chips[i].name);
+
+  // 45% chance: short punchy single line
+  if (Math.random() < 0.45) return pick(F.short);
+
+  const opener = pick(F.open);
+
+  // Shuffle selected chips, pick 1 or 2 max
+  const shuffled = [...selectedChips].sort(() => Math.random() - 0.5);
+  const numChips = Math.min(shuffled.length, Math.random() < 0.6 ? 1 : 2);
+  const chipBits = [];
+  for (let i = 0; i < numChips; i++) {
+    const pool = F.chip[shuffled[i]];
+    if (pool) chipBits.push(pick(pool));
+  }
+
+  const closer = pick(F.close);
+
+  // Vary structure naturally
+  if (chipBits.length === 0) return `${opener}. ${closer}`;
+  if (chipBits.length === 1) {
+    return Math.random() < 0.5
+      ? `${opener}. ${chipBits[0]}. ${closer}`
+      : `${opener}. ${chipBits[0]} — ${closer}`;
+  }
+  // 2 chips — connect naturally
+  const connectors = [`and`, `also`, `plus`];
+  return `${opener}. ${chipBits[0]}, ${pick(connectors)} ${chipBits[1]}. ${closer}`;
+}
+
+const MAX_ATTEMPTS = 50;
+
+function buildReview() {
+  let text = '';
+  let attempts = 0;
+  while (attempts < MAX_ATTEMPTS) {
+    const candidate = generateCandidate();
+    const fp = fingerprint(candidate);
+    if (!usedThisSession.has(fp) && !retiredGlobal.has(fp)) {
+      text = candidate;
+      usedThisSession.add(fp);
+      break;
+    }
+    attempts++;
+  }
+  if (!text) text = generateCandidate(); // fallback
+  document.getElementById('review-ta').value = text;
+  regenCount++;
+  const btn = document.getElementById('regen-btn');
+  if (regenCount >= 15) {
+    btn.disabled = true;
+    btn.textContent = 'max versions reached';
+  }
+}
+
+function regenReview() { buildReview(); toast('new version ready!'); }
+
+// ── NAVIGATION ────────────────────────────────────────────────────────────
+function go(n) {
+  document.getElementById('s' + currentStep).classList.remove('active');
+  currentStep = n;
+  document.getElementById('s' + n).classList.add('active');
+  const pct = n === 1 ? 0 : n === 2 ? 50 : 100;
+  document.getElementById('prog').style.width = pct + '%';
+  document.getElementById('prog-pct').textContent = pct + '%';
+  const lbl = { 1:'Step 1 of 2', 2:'Step 2 of 2', 3:'Done!' };
+  document.getElementById('prog-label').textContent = lbl[n] || 'Done!';
+  window.scrollTo({ top:0, behavior:'smooth' });
+
+  if (n === 2) {
+    regenCount = 0;
+    usedThisSession = new Set();
+    copied = false;
+    const rb = document.getElementById('regen-btn');
+    rb.disabled = false;
+    rb.textContent = '↻ try different version';
+    buildReview();
+  }
+}
+
+// ── COPY ──────────────────────────────────────────────────────────────────
+function copyReview() {
+  const text = document.getElementById('review-ta').value;
+  const done = () => {
+    copied = true;
+    const btn = document.getElementById('copy-btn');
+    btn.classList.add('copied');
+    document.getElementById('copy-icon').textContent = '✓';
+    document.getElementById('copy-txt').textContent = 'Copied!';
+    toast('copied! tap Open Google now →');
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      document.getElementById('copy-icon').textContent = '📋';
+      document.getElementById('copy-txt').textContent = 'Copy Review';
+    }, 4000);
+  };
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(done).catch(() => fallback(text, done));
+  } else { fallback(text, done); }
+}
+
+function fallback(text, cb) {
+  const ta = document.createElement('textarea');
+  ta.value = text; ta.style.cssText = 'position:fixed;opacity:0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); cb(); }
+  catch(e) { toast('please copy the text above manually'); }
+  document.body.removeChild(ta);
+}
+
+async function onOpenGoogle() {
+  if (!copied) copyReview();
+  const text = document.getElementById('review-ta').value;
+  const fp = fingerprint(text);
+  retiredGlobal.add(fp);
+  await sbMarkPosted(fp);
+  setTimeout(() => go(3), 1800);
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────────
+function toast(msg, dur=3000) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), dur);
+}
+</script>
+</body>
+</html>
