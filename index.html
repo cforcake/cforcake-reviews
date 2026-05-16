@@ -58,35 +58,29 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .review-card::before{content:'"';font-family:'Cormorant Garamond',serif;font-size:80px;color:var(--spice2);position:absolute;top:-10px;left:14px;line-height:1;pointer-events:none}
 .review-ta{width:100%;border:none;outline:none;resize:none;font-size:14px;line-height:1.8;color:var(--ink);font-family:'DM Sans',sans-serif;background:transparent;min-height:110px;padding-top:20px}
 .review-hint{font-size:11px;color:var(--ink4);border-top:1px solid var(--cream3);padding-top:10px;margin-top:6px;display:flex;align-items:center;justify-content:space-between}
-.regen-btn{font-size:11px;color:var(--spice);cursor:pointer;font-weight:600;background:none;border:none;font-family:'DM Sans',sans-serif;padding:0;transition:opacity .15s}
-.regen-btn:hover{opacity:.7}
+.regen-btn{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 12px;border-radius:99px;
+  border:1.5px solid var(--spice);
+  background:var(--spice3);
+  color:var(--spice);font-size:12px;font-weight:600;
+  cursor:pointer;font-family:'DM Sans',sans-serif;
+  transition:all .18s;white-space:nowrap;
+}
+.regen-btn:hover{background:var(--spice2);border-color:var(--spice)}
+.regen-btn:active{transform:scale(.97)}
 .regen-btn:disabled{opacity:.3;cursor:default}
 
 /* GOLDEN 5 STAR SECTION */
-.five-star-box{
-  background:linear-gradient(135deg,#fffbf0,#fff8e0);
-  border:1.5px solid rgba(212,175,55,.4);
-  border-radius:var(--r);padding:18px 20px;
-  margin-bottom:16px;
-  box-shadow:0 2px 20px rgba(184,134,11,.12);
-}
-.five-star-label{
-  font-size:10px;font-weight:600;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--gold);
-  margin-bottom:10px;
-}
-.five-stars-row{display:flex;gap:4px;margin-bottom:10px}
-.fstar{font-size:32px;color:#F5A623;line-height:1;animation:starPop .4s cubic-bezier(.175,.885,.32,1.275) both}
-.fstar:nth-child(1){animation-delay:.05s}
-.fstar:nth-child(2){animation-delay:.1s}
-.fstar:nth-child(3){animation-delay:.15s}
-.fstar:nth-child(4){animation-delay:.2s}
-.fstar:nth-child(5){animation-delay:.25s}
-@keyframes starPop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
-.five-star-note{font-size:12px;color:var(--ink3);line-height:1.55}
-.five-star-note strong{color:var(--ink2)}
+
+
 
 /* HOW TO */
+.disclosure{
+  font-size:10px;color:var(--ink4);font-style:italic;
+  text-align:center;padding-top:8px;
+  border-top:1px solid var(--cream3);margin-top:6px;
+}
 .how-to{background:var(--gold2);border:1px solid rgba(184,134,11,.2);border-radius:var(--r2);padding:15px 16px;margin-bottom:20px}
 .how-to-title{font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
 .how-steps{list-style:none;display:flex;flex-direction:column;gap:7px}
@@ -101,6 +95,13 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .google-btn{padding:14px;border-radius:var(--r2);border:none;background:var(--ink);color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:7px;text-decoration:none}
 .google-btn:hover{background:var(--ink2)}
 .google-btn svg{width:16px;height:16px;flex-shrink:0}
+.copy-reminder{
+  display:none;background:#1a3d28;color:#4fbe87;
+  border-radius:var(--r2);padding:11px 16px;
+  font-size:12px;font-weight:500;text-align:center;
+  margin-bottom:12px;line-height:1.5;
+  animation:rise .3s cubic-bezier(.4,0,.2,1);
+}
 
 /* BUTTONS */
 .btn{width:100%;padding:15px;border-radius:var(--r2);font-size:15px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .18s;border:none}
@@ -121,6 +122,33 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 .loyalty-card-label{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
 .loyalty-card-text{font-size:13px;color:var(--ink2);line-height:1.65}
 .loyalty-link{display:inline-block;margin-top:12px;font-size:13px;font-weight:600;color:var(--spice);text-decoration:none}
+
+/* INLINE GOLDEN STARS next to heading */
+.h1-stars-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.h1-stars-row .h1{margin-bottom:0}
+.inline-stars{font-size:28px;color:#F5A623;letter-spacing:2px;flex-shrink:0;padding-bottom:4px}
+.photo-commit{
+  background:#fff;border:1.5px solid var(--cream3);
+  border-radius:var(--r);padding:20px;
+  margin-bottom:16px;box-shadow:var(--shadow);
+  display:flex;align-items:flex-start;gap:14px;
+  cursor:pointer;transition:border-color .18s;
+  user-select:none;
+}
+.photo-commit:hover{border-color:var(--parchment)}
+.photo-commit.checked{border-color:var(--spice);background:var(--spice3)}
+.photo-commit-check{
+  width:22px;height:22px;border-radius:6px;
+  border:1.5px solid var(--parchment);background:#fff;
+  flex-shrink:0;display:flex;align-items:center;
+  justify-content:center;font-size:11px;color:transparent;
+  transition:all .15s;margin-top:2px;
+}
+.photo-commit.checked .photo-commit-check{
+  background:var(--spice);border-color:var(--spice);color:#fff;
+}
+.photo-commit-text{font-size:13px;color:var(--ink2);line-height:1.6}
+.photo-commit-text strong{color:var(--ink);font-weight:600}
 
 /* TOAST */
 .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--ink);color:#fff;border-radius:99px;padding:11px 22px;font-size:13px;font-weight:500;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;z-index:999;box-shadow:0 8px 32px rgba(28,18,8,.25)}
@@ -159,37 +187,38 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
 
 <!-- ═══ STEP 2: READY TO POST ═══ -->
 <div class="step" id="s2">
-  <div class="eyebrow">Ready to Post</div>
-  <div class="h1">Your review<br><em>is ready!</em></div>
-  <div class="body-text">Edit it however you like — or just post it as is!</div>
+  <div class="eyebrow">Your Review</div>
+  <div class="h1-stars-row">
+    <div class="h1">Here's a<br><em>starting point!</em></div>
+    <div class="inline-stars">★★★★★</div>
+  </div>
+  <div class="body-text">Based on what you picked — edit it to make it yours, or post as is!</div>
 
   <div class="review-card">
     <textarea class="review-ta" id="review-ta" rows="5"></textarea>
     <div class="review-hint">
-      <span>✏ tap to edit</span>
-      <button class="regen-btn" id="regen-btn" onclick="regenReview()">↻ try different version</button>
+      <span>✏ tap to edit anytime</span>
+      <button class="regen-btn" id="regen-btn" onclick="regenReview()">↻ try a different version</button>
+    </div>
+    <div class="disclosure">suggested draft — please edit to reflect your personal experience</div>
+  </div>
+
+  <!-- PHOTO COMMITMENT (Option 3) -->
+  <div class="photo-commit" id="photo-commit" onclick="togglePhotoCommit()">
+    <div class="photo-commit-check" id="commit-check">✓</div>
+    <div class="photo-commit-text">
+      <strong>I'll add a photo on Google 📸</strong><br>
+      one last thing — a photo makes your review 5× more powerful. snap your cake and add it on Google!
     </div>
   </div>
 
-  <!-- GOLDEN 5 STAR SECTION -->
-  <div class="five-star-box">
-    <div class="five-star-label">Select on Google Reviews</div>
-    <div class="five-stars-row">
-      <span class="fstar">★</span>
-      <span class="fstar">★</span>
-      <span class="fstar">★</span>
-      <span class="fstar">★</span>
-      <span class="fstar">★</span>
-    </div>
-    <div class="five-star-note">On the next page, make sure <strong>5 stars are selected</strong> before posting your review!</div>
-  </div>
+  
 
   <div class="how-to">
-    <div class="how-to-title">How to post — 3 quick steps</div>
+    <div class="how-to-title">How to post — 2 quick steps</div>
     <ul class="how-steps">
-      <li><div class="how-num">1</div>Tap <strong>"Copy Review"</strong> — your text is copied</li>
-      <li><div class="how-num">2</div>Tap <strong>"Open Google"</strong> — our reviews page opens</li>
-      <li><div class="how-num">3</div>Select <strong>5 stars</strong>, <strong>paste</strong> your review, tap Post!</li>
+      <li><div class="how-num">1</div>Tap <strong>"Open Google"</strong> — your review is automatically copied &amp; the review page opens</li>
+      <li><div class="how-num">2</div>Select <strong>5 stars</strong>, <strong>paste</strong> your review, tap Post!</li>
     </ul>
   </div>
 
@@ -197,11 +226,12 @@ body::before{content:'';position:fixed;inset:0;background-image:url("data:image/
     <button class="copy-btn" id="copy-btn" onclick="copyReview()">
       <span id="copy-icon">📋</span><span id="copy-txt">Copy Review</span>
     </button>
-    <a class="google-btn" href="https://search.google.com/local/writereview?placeid=ChIJI8C9zBPP5zsRnuvvBf_iFRE" target="_blank" onclick="onOpenGoogle()">
+    <a class="google-btn" id="google-btn" href="https://search.google.com/local/writereview?placeid=ChIJI8C9zBPP5zsRnuvvBf_iFRE" target="_blank" onclick="onOpenGoogle()">
       <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
       Open Google
     </a>
   </div>
+  <div class="copy-reminder" id="copy-reminder">📋 Review copied! Paste it on the next page before posting.</div>
 </div>
 
 <!-- ═══ STEP 3: THANK YOU ═══ -->
@@ -234,7 +264,7 @@ async function sbLoadRetired() {
     const r = await fetch(SB_REST + '?select=fingerprint,use_count,retired', { headers:SB_HDR });
     if (!r.ok) return;
     const rows = await r.json();
-    rows.forEach(row => { if (row.use_count >= 3 || row.retired) retiredGlobal.add(row.fingerprint); });
+    rows.forEach(row => { if (row.use_count >= 1 || row.retired) retiredGlobal.add(row.fingerprint); });
   } catch(e) {}
 }
 
@@ -258,6 +288,7 @@ async function sbMarkPosted(fp) {
 // ── STATE ─────────────────────────────────────────────────────────────────
 let currentStep = 1;
 let picks = new Set();
+let photoCommitted = false;
 let usedThisSession = new Set();
 let retiredGlobal   = new Set();
 let regenCount = 0;
@@ -306,37 +337,70 @@ buildChips();
 // ── FRAGMENT POOL — only 5 star, Gen Z + millennial mix ──────────────────
 const F = {
 
-  // SHORT PUNCHY — Gen Z style (45% of reviews)
   short: [
+    // Gen Z — ultra short (4-6 words)
+    `C for Cake. that's it.`,
+    `the cake was everything 🤌`,
+    `obsessed. genuinely obsessed.`,
+    `no notes. just go.`,
+    `came once. now a problem.`,
+    `the Nutella Blast changed me`,
+    `that cheesecake is unreal fr`,
+    `bro the cake hit 😭`,
+    `the milkshake goes crazy ngl`,
+    `C for Cake >>> everything`,
+    // Gen Z — short sentences
     `C for Cake is actually so good i can't`,
     `not me coming back here every week 😭`,
     `told everyone i know about this place`,
     `C for Cake understood the assignment`,
     `no notes. genuinely perfect.`,
-    `came once. it's a problem now.`,
     `the cake was sending me 🤌`,
     `this place lives in my head rent free`,
-    `C for Cake >>> everything else nearby`,
     `whoever bakes here deserves a raise`,
     `my situationship with C for Cake is very serious`,
     `went for one cake, left with four. no regrets.`,
     `it's giving everything it's supposed to give`,
     `the cakes here are criminally good`,
-    `C for Cake said 'here's a main character moment' and delivered`,
     `if you know, you know. if you don't — go find out`,
-    `came for the cake, stayed for the whole experience`,
     `just go. trust.`,
     `best decision i've made this month honestly`,
     `5 stars doesn't feel like enough`,
-    // Millennial style short
+    `the Nutella Blast had me in a chokehold fr`,
+    `okay the Nutella Blast is not something i'm over yet`,
+    `the cheesecake here is actually illegal`,
+    `had the cheesecake and now nothing else compares`,
+    `the milkshake went crazy ngl`,
+    `the cake designs are giving museum worthy 😭`,
+    `moist, fresh, perfect — this is what cake should taste like`,
+    `the prices are so reasonable for how good everything is`,
+    `Mugdha recommended the Nutella Blast and i'm never recovering`,
+    `asked the owner for a rec and she pointed me to the cheesecake. correct.`,
+    `Nayan helped us pick the cake design and it turned out stunning`,
+    `the owner (Mugdha) remembered my order from last time which was a nice touch`,
+    `Nayan sorted out my custom order quickly, no fuss at all`,
+    `got it for a birthday and everyone kept asking where it's from`,
+    `the cake was the highlight of the whole party ngl`,
+    `ordered for an anniversary and it was absolutely perfect`,
+    `my kid's birthday cake was stunning — C for Cake delivered`,
+    // Millennial short
     `one of the best bakeries i've ever been to, hands down`,
     `genuinely one of my favourite spots in the city now`,
     `C for Cake never disappoints — been coming for months`,
     `this is my go-to bakery recommendation, always`,
     `quality like this is rare — really impressed`,
+    `the Nutella Blast is worth every single rupee`,
+    `their cheesecake is genuinely one of the best i've had`,
+    `reasonable prices, outstanding quality — rare combo`,
+    `the milkshakes are better than expected, honestly`,
+    `Mugdha's recommendations are always spot on — trust her`,
+    `the cake designs alone are worth visiting for`,
+    `fresh, moist, and actually flavourful — ticks all the boxes`,
+    `been recommending C for Cake to everyone since my first visit`,
+    `came for a birthday cake and ended up a regular`,
+    `the packaging is so beautiful it almost feels wrong to open`,
   ],
 
-  // OPENERS for medium reviews
   open: [
     `okay so i don't usually write reviews but C for Cake genuinely deserves one`,
     `right so this place is something else entirely`,
@@ -347,24 +411,43 @@ const F = {
     `genuinely one of those places you're glad you stumbled across`,
     `C for Cake has entered my top bakeries of all time list`,
     `i came in skeptical and left completely converted`,
+    `came in for the Nutella Blast and stayed for everything else`,
+    `my friend got the cheesecake and i've been thinking about it since`,
+    `ordered a milkshake while waiting and honestly that was a decision`,
+    `Mugdha helped me pick when i couldn't decide and she nailed it`,
+    `Nayan was super helpful with the custom order — whole process was easy`,
+    `went for a birthday cake and ended up discovering my new go-to`,
+    `ordered for an anniversary and the cake was exactly what we wanted`,
+    `got a recommendation from a friend, came in, immediately understood why`,
+    `found this place by accident and now i come here on purpose`,
+    `needed a cake for a last minute celebration — C for Cake saved the day`,
     // Millennial openers
     `honestly one of the best bakery experiences i've had in this city`,
     `i've tried a lot of bakeries and C for Cake genuinely stands out`,
     `really impressed with everything here — exceeded expectations`,
     `a friend recommended C for Cake and i completely understand why`,
+    `came for a birthday cake and discovered my new favourite spot`,
+    `been visiting for a while now and consistency is really impressive`,
+    `ordered online for the first time and the experience was seamless`,
   ],
 
-  // CHIP REACTIONS — casual, specific, no formal sentences
   chip: {
     'the cakes': [
       `the cake was insane 🤌`,
       `that cake hit differently fr`,
       `whoever made the cake — icon`,
-      `the baking here is next level seriously`,
       `fluffy, moist, perfect — no notes`,
       `i thought about that cake for days after`,
       `the cake alone makes the trip worth it`,
       `okay the cake was unreal`,
+      `the Nutella Blast specifically needs its own review`,
+      `got the Nutella Blast and i'm not the same person anymore`,
+      `the cake designs are stunning — almost too pretty to eat`,
+      `visually outstanding AND delicious which is rare`,
+      `the cheesecake was genuinely one of the best i've had`,
+      `tried the cheesecake on a whim and now i order it every time`,
+      `the moisture in that cake — perfect every single time`,
+      `whoever is in that kitchen really knows what they're doing`,
     ],
     'the freshness': [
       `everything tasted so fresh it was unreal`,
@@ -372,6 +455,9 @@ const F = {
       `nothing tasted pre-made or sitting around`,
       `freshness was obvious from the first bite`,
       `clearly made with actual care`,
+      `moist and fresh every single time, never dry`,
+      `the difference from other bakeries is immediately obvious`,
+      `doesn't taste like it sat in a display all day — properly fresh`,
     ],
     'the staff': [
       `the team there is genuinely so warm`,
@@ -379,6 +465,12 @@ const F = {
       `felt like a regular even on my first visit`,
       `everyone was so helpful and nice`,
       `the vibe from the staff makes such a difference`,
+      `staff were polite and actually helpful when i couldn't decide`,
+      `they recommended the Nutella Blast and honestly bless them`,
+      `Mugdha helped me pick and her recommendation was spot on`,
+      `Nayan sorted out my order quickly, no fuss`,
+      `Mugdha remembered what i ordered last time — small thing, big impression`,
+      `the owners are genuinely warm — you can feel it in the whole place`,
     ],
     'gifting it': [
       `bought it as a gift and it was a massive hit`,
@@ -386,26 +478,39 @@ const F = {
       `the presentation makes it perfect for gifting`,
       `gifted this and got so many compliments, not even for me 😭`,
       `the person i gave it to was genuinely so happy`,
+      `the cake design made it look like a proper luxury gift`,
+      `ordered for an anniversary and it looked and tasted amazing`,
+      `got it for my parents' anniversary — they absolutely loved it`,
     ],
     'the vibe': [
       `the vibe there is immaculate`,
       `love the atmosphere — so easy to just sit and enjoy`,
-      `it's such a nice space honestly`,
-      `great place to slow down for a bit`,
+      `it's such a cozy space honestly`,
+      `great place to slow down and enjoy something good`,
       `the ambience alone makes it worth visiting`,
+      `cozy, warm, exactly what a bakery should feel like`,
+      `the kind of place you don't want to leave in a hurry`,
     ],
     'the value': [
       `honestly great value for what you get`,
-      `fair prices, no complaints`,
+      `fair prices, no complaints at all`,
       `felt like i got more than what i paid for`,
       `not the cheapest but absolutely worth every rupee`,
+      `the prices are so reasonable for this quality`,
+      `reasonable pricing for food this good is rare — appreciate it`,
+      `compared to what you get elsewhere, the pricing is very fair`,
     ],
     'the flavours': [
       `the flavour options are unlike anything nearby`,
       `tried something new and it genuinely blew me away`,
       `combinations you won't find at a regular bakery`,
       `so many interesting options — hard to choose`,
-      `they have things i've never seen anywhere else`,
+      `the cheesecake flavours specifically are something else`,
+      `tried the cheesecake and now i'm a changed person`,
+      `the milkshakes are actually so good — didn't expect that`,
+      `got a milkshake to go and it was the right call`,
+      `the Nutella Blast flavour is absolutely unmatched`,
+      `they do things with flavour that other places just don't`,
     ],
     'the packaging': [
       `the packaging is SO pretty oh my god`,
@@ -413,33 +518,43 @@ const F = {
       `presentation was 10/10 no notes`,
       `literally couldn't stop taking photos of the box`,
       `feels premium before you even open it`,
+      `the cake design inside was just as beautiful as the box`,
+      `the packaging makes it such a good gift straight out of the box`,
     ],
     'the consistency': [
       `been coming for months — always on point`,
       `never had a bad experience here, not once`,
       `same quality every single time — that's actually rare`,
       `consistency is underrated and they absolutely have it`,
+      `the Nutella Blast hits the same every single time`,
+      `reliable in the best way — never a dip in quality`,
     ],
     'the occasion': [
       `made the whole celebration so much better`,
       `the cake was literally the highlight of the party`,
       `everyone at the event kept asking about it`,
       `exactly what we needed for the occasion`,
+      `the cake design was so good people were taking photos before cutting it`,
+      `ordered for a birthday and it honestly elevated the whole thing`,
+      `came through for the anniversary — couldn't have asked for better`,
     ],
     'family approved': [
       `my kids absolutely demolished it and asked when we're going back`,
       `whole family approved — high bar to clear`,
       `became a family favourite immediately`,
       `kids asked to go back before we even got home 😭`,
+      `everyone had something different and everyone was happy`,
+      `even the picky ones in the family loved it`,
     ],
     'the location': [
       `great spot, easy to find`,
       `location is super convenient`,
       `easy to get to and worth the trip either way`,
+      `worth going out of your way for honestly`,
+      `the kind of place that makes you glad you live nearby`,
     ],
   },
 
-  // CLOSERS — punchy endings
   close: [
     `just go`,
     `seriously just go`,
@@ -456,10 +571,19 @@ const F = {
     `became a regular after the first bite`,
     `you won't regret it`,
     `do yourself a favour and go`,
+    `the Nutella Blast alone is reason enough to visit`,
+    `go for the cheesecake, stay for everything else`,
+    `ask Mugdha for a rec — she won't disappoint`,
+    `trust the owners on this one — they know their stuff`,
+    `10/10 would drag all my friends here`,
+    `already told everyone i know`,
+    `this place has a permanent spot in my life now`,
     // Millennial closers
     `highly recommend to anyone looking for a great bakery`,
     `will definitely be coming back`,
     `a genuinely great spot — worth every visit`,
+    `would recommend without hesitation`,
+    `the kind of place you keep coming back to`,
   ],
 };
 
@@ -530,6 +654,12 @@ function buildReview() {
 
 function regenReview() { buildReview(); toast('new version ready!'); }
 
+function togglePhotoCommit() {
+  photoCommitted = !photoCommitted;
+  const el = document.getElementById('photo-commit');
+  el.classList.toggle('checked', photoCommitted);
+}
+
 // ── NAVIGATION ────────────────────────────────────────────────────────────
 function go(n) {
   document.getElementById('s' + currentStep).classList.remove('active');
@@ -546,6 +676,10 @@ function go(n) {
     regenCount = 0;
     usedThisSession = new Set();
     copied = false;
+    photoCommitted = false;
+    const pc = document.getElementById('photo-commit');
+    if (pc) { pc.classList.remove('checked'); }
+    document.getElementById('copy-reminder').style.display = 'none';
     const rb = document.getElementById('regen-btn');
     rb.disabled = false;
     rb.textContent = '↻ try different version';
@@ -584,12 +718,38 @@ function fallback(text, cb) {
 }
 
 async function onOpenGoogle() {
-  if (!copied) copyReview();
+  // Always copy first — whether or not they already clicked Copy
   const text = document.getElementById('review-ta').value;
+  const showReminder = () => {
+    const rem = document.getElementById('copy-reminder');
+    rem.style.display = 'block';
+    // Mark copy button as copied
+    const btn = document.getElementById('copy-btn');
+    btn.classList.add('copied');
+    document.getElementById('copy-icon').textContent = '✓';
+    document.getElementById('copy-txt').textContent = 'Copied!';
+    copied = true;
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      document.getElementById('copy-icon').textContent = '📋';
+      document.getElementById('copy-txt').textContent = 'Copy Review';
+    }, 5000);
+  };
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(text).then(showReminder).catch(() => { fallback(text, showReminder); });
+  } else { fallback(text, showReminder); }
+  // Save fingerprint to Supabase
   const fp = fingerprint(text);
   retiredGlobal.add(fp);
   await sbMarkPosted(fp);
-  setTimeout(() => go(3), 1800);
+  setTimeout(() => {
+    go(3);
+    // If they already committed to adding a photo, hide the nudge (they don't need to see it again)
+    if (photoCommitted) {
+      const nudge = document.getElementById('photo-nudge');
+      if (nudge) nudge.style.display = 'none';
+    }
+  }, 2200);
 }
 
 // ── TOAST ─────────────────────────────────────────────────────────────────
